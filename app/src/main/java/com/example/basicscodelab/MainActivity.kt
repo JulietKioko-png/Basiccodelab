@@ -38,6 +38,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.basicscodelab.ui.theme.BasicsCodelabTheme
 
+data class Person(
+    val name: String,
+    val description: String
+)
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,17 +91,37 @@ fun OnboardingScreen(
 @Composable
 private fun Greetings(
     modifier: Modifier = Modifier,
-    names: List<String> = List(1000) { "$it" }
+    people: List<Person> = listOf(
+        Person(
+            name = "Juliet",
+            description = "Learning Jetpack Compose and Android development."
+        ),
+        Person(
+            name = "Brian",
+            description = "Enjoys building modern mobile apps."
+        ),
+        Person(
+            name = "Sarah",
+            description = "Practicing animations and UI design."
+        ),
+        Person(
+            name = "Mike",
+            description = "Exploring Kotlin and Material 3."
+        )
+    )
+
+
 ) {
     LazyColumn(modifier = modifier.padding(vertical = 4.dp)) {
-        items(names) { name ->
-            Greeting(name)
+        items(people) { person ->
+            Greeting(person)
+        }
         }
     }
-}
+
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun Greeting(person: Person, modifier: Modifier = Modifier) {
     var expanded by rememberSaveable { mutableStateOf(false) }
 
     Card(
@@ -112,8 +136,8 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                 .padding(24.dp)
                 .animateContentSize(
                     animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioMediumBouncy,
-                        stiffness = Spring.StiffnessLow
+                        dampingRatio = Spring.DampingRatioHighBouncy,
+                        stiffness = Spring.StiffnessVeryLow
                     )
                 )
         ) {
@@ -124,7 +148,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
                 Text(text = "Hello")
 
                 Text(
-                    text = name,
+                    text = person.name,
                     style = MaterialTheme.typography.headlineMedium.copy(
                         fontWeight = FontWeight.ExtraBold
                     )
@@ -132,7 +156,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 
                 if (expanded) {
                     Text(
-                        text = "Compose makes UI animations simple and powerful. ".repeat(2)
+                        text = person.description
                     )
                 }
             }
