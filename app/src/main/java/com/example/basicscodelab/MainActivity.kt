@@ -42,6 +42,7 @@ data class Person(
     val name: String,
     val description: String
 )
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,13 +56,17 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp(modifier: Modifier = Modifier) {
-    var shouldShowOnboarding by rememberSaveable { mutableStateOf(true) }
+    var shouldShowOnboarding by rememberSaveable {
+        mutableStateOf(true)
+    }
 
     Surface(modifier) {
         if (shouldShowOnboarding) {
-            OnboardingScreen(onContinueClicked = {
-                shouldShowOnboarding = false
-            })
+            OnboardingScreen(
+                onContinueClicked = {
+                    shouldShowOnboarding = false
+                }
+            )
         } else {
             Greetings()
         }
@@ -79,6 +84,7 @@ fun OnboardingScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text("Welcome to the Basics Codelab!")
+
         Button(
             modifier = Modifier.padding(vertical = 24.dp),
             onClick = onContinueClicked
@@ -109,27 +115,38 @@ private fun Greetings(
             description = "Exploring Kotlin and Material 3."
         )
     )
-
-
 ) {
-    LazyColumn(modifier = modifier.padding(vertical = 4.dp)) {
+
+    LazyColumn(
+        modifier = modifier.padding(vertical = 4.dp)
+    ) {
+
         items(people) { person ->
             Greeting(person)
         }
-        }
     }
-
+}
 
 @Composable
-fun Greeting(person: Person, modifier: Modifier = Modifier) {
-    var expanded by rememberSaveable { mutableStateOf(false) }
+fun Greeting(
+    person: Person,
+    modifier: Modifier = Modifier
+) {
+
+    var expanded by rememberSaveable {
+        mutableStateOf(false)
+    }
 
     Card(
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.primary
         ),
-        modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+        modifier = modifier.padding(
+            vertical = 4.dp,
+            horizontal = 8.dp
+        )
     ) {
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -145,6 +162,7 @@ fun Greeting(person: Person, modifier: Modifier = Modifier) {
             Column(
                 modifier = Modifier.weight(1f)
             ) {
+
                 Text(text = "Hello")
 
                 Text(
@@ -161,25 +179,36 @@ fun Greeting(person: Person, modifier: Modifier = Modifier) {
                 }
             }
 
-            IconButton(onClick = { expanded = !expanded }) {
+            IconButton(
+                onClick = { expanded = !expanded }
+            ) {
+
                 Icon(
-                    imageVector = if (expanded)
-                        Icons.Filled.ExpandLess
-                    else
-                        Icons.Filled.ExpandMore,
-                    contentDescription = if (expanded)
-                        "Show less"
-                    else
-                        "Show more"
+                    imageVector =
+                        if (expanded)
+                            Icons.Filled.ExpandLess
+                        else
+                            Icons.Filled.ExpandMore,
+
+                    contentDescription =
+                        if (expanded)
+                            "Show less"
+                        else
+                            "Show more"
                 )
             }
         }
     }
 }
 
-@Preview(showBackground = true, widthDp = 320, heightDp = 320)
+@Preview(
+    showBackground = true,
+    widthDp = 320,
+    heightDp = 320
+)
 @Composable
 fun OnboardingPreview() {
+
     BasicsCodelabTheme {
         OnboardingScreen(onContinueClicked = {})
     }
@@ -191,9 +220,13 @@ fun OnboardingPreview() {
     uiMode = UI_MODE_NIGHT_YES,
     name = "DarkPreview"
 )
-@Preview(showBackground = true, widthDp = 320)
+@Preview(
+    showBackground = true,
+    widthDp = 320
+)
 @Composable
 fun MyAppPreview() {
+
     BasicsCodelabTheme {
         MyApp()
     }
