@@ -8,7 +8,6 @@ This project is a beginner Android application developed using Kotlin and Jetpac
 * Dynamic greetings list using LazyColumn
 * Expandable and collapsible cards
 * Smooth UI animations
-* Material 3 theming
 * Dark mode support
 * State management with `rememberSaveable`
 
